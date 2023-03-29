@@ -48,6 +48,7 @@ setup() {
 	else
 		cp ~/.bashrc $SWITCHGIT_STORAGE/bashrc.bak.txt
 		bashrc_entry >> ~/.bashrc
+		echo -e "Please run the command\n\t$ source ~/.bashrc"
 		exit 0
 	fi
 }

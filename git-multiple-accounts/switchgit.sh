@@ -11,7 +11,7 @@ make_directory_structure() {
 }
 
 bashrc_entry() {
-	echo "### switchgit setup - make sure this is the FINAL definition of your GH_CONFIG_DIR ### "
+	echo -e "\n### switchgit setup - make sure this is the FINAL definition of your GH_CONFIG_DIR ### "
 	echo "export SWITCHGIT_STORAGE=/home/\$USER/.config/switchgit"
 	echo "export SWITCHGIT_CURRENT_CONFIG=\$SWITCHGIT_STORAGE/current.txt"
 	echo "export GH_CONFIG_DIR=\$(cat \$SWITCHGIT_CURRENT_CONFIG)"

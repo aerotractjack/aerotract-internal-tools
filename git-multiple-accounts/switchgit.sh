@@ -1,81 +1,69 @@
 #!/bin/bash
 
-# gh system storage files
-ghdir=/home/$USER/.config/gh
-ghfile=$ghdir/hosts.yml
-ghconf=/home/$USER/.gitconfig
+SWITCHGIT_STORAGE=/home/$USER/.config/switchgit
+SWITCHGIT_CURRENT_CONFIG=$SWITCHGIT_STORAGE/current.txt
 
-# switchgit storage
-swp=/home/$USER/.config/switchgit
-mkdir -p $swp
+gh_config_dir=/home/$USER/.config/gh
 
-# Quick python script to output list of profiles
-# registered in switchgit 
-list_profiles2() {
-    python3 <<-EOF
-import os
-files=os.listdir('$swp')
-for p in set([x.split('_')[0] for x in files]):
-    print(f'-{p}')
-EOF
+make_directory_structure() {
+	mkdir -p $SWITCHGIT_STORAGE
+	touch $SWITCHGIT_CURRENT_CONFIG
+}
+
+bashrc_entry() {
+	echo "### switchgit setup - make sure this is the FINAL definition of your GH_CONFIG_DIR ### "
+	echo "export SWITCHGIT_STORAGE=/home/\$USER/.config/switchgit"
+	echo "export SWITCHGIT_CURRENT_CONFIG=\$SWITCHGIT_STORAGE/current.txt"
+	echo "export GH_CONFIG_DIR=\$(cat \$SWITCHGIT_CURRENT_CONFIG)"
 }
 
 list_profiles() {
-    ls $swp
+	ls -I "*.txt" $SWITCHGIT_STORAGE
 }
 
-# Display current gh account
-who() {
-    gh api user | jq -r .login
+username() {
+	gh api user | jq -r .login
 }
 
-# Copy gh storage files into switchgit registry
-init_profile() {
-    prof=$(who)
-    currconf=$ghconf
-    currfile=$ghfile
-    mkdir -p $swp/$prof
-    cp -v $currconf "${swp}/${prof}/.gitconfig"
-    cp -v $currfile "${swp}/${prof}/hosts.yml"
-    echo "Added ${prof}"
+add_current_account() {
+	who=$(username)
+	mkdir -p $SWITCHGIT_STORAGE/$who
+	cp $gh_config_dir/config.yml $gh_config_dir/hosts.yml $SWITCHGIT_STORAGE/$who
+	echo $SWITCHGIT_STORAGE/$who > $SWITCHGIT_CURRENT_CONFIG
 }
 
-# Swap current gh account with previously registered account
-swap_profile2() {
-    prof=$1
-    newconf="${swp}/${prof}_gitconfig"
-    newfile="${swp}/${prof}_hosts"
-    dstconf=$ghconf
-    dstfile=$ghfile
-    cp -v $newconf $dstconf
-    cp -v $newfile $dstfile
-    echo "Swapped profile to ${prof}"
+switch() {
+	who=$1
+	export GH_CONFIG_DIR=$SWITCHGIT_STORAGE/$who
+	echo $SWTICHGIT_STORAGE/$who > $SWITCHGIT_CURRENT_CONFIG
 }
 
-swap_profile() {
-    prof=$1
-    export GH_CONFIG_DIR=$swp/$prof
-}
-
-# Log in to new profile using GitHub and register with switchgit
-init_new_profile() {
-    init_profile
-    gh auth login
-    init_profile
+setup() {
+	make_directory_structure 
+	add_current_account
+	if grep "### switchgit setup" ~/.bashrc; then
+		echo "Looks like switchgit is already set up. If this is a mistake, delete the following lines in your ~/.bashrc:"
+		bashrc_entry
+		exit 1
+	else
+		cp ~/.bashrc $SWITCHGIT_STORAGE/bashrc.bak.txt
+		bashrc_entry >> ~/.bashrc
+		exit 0
+	fi
 }
 
 usage() {
-    echo "$ ./switchgit.sh ACTION"
+    echo "$ ./switchgit.sh ACTION [ARG]"
     echo "Actions: "
     echo -e "\tlist_profiles: List profiles stored by switchgit"
-    echo -e "\twho: Display current GitHub/gh profile name"
-    echo -e "\tinit_profile: Add current profile to switchgit"
-    echo -e "\tswap_profile PROFILE: Switch git profile to given account"
-    echo -e "\tinit_new_profile: Login to new GitHub account, store previous profile, \n\t\tand swap to new one."
+    echo -e "\tusername: Display current GitHub/gh profile name"
+    echo -e "\tadd_current_account: Add current profile to switchgit"
+    echo -e "\tswitch PROFILE: Switch git profile to given account"
+    echo -e "\tsetup: Setup switchgit.sh on your system (one time only)"
     exit 0
 }
 
-if [[ "$1" = "-h" || "$1" = "--help" || "$1" = "--usage" ]]; then
+if [[ $# -eq 0 || "$1" = "-h" || "$1" = "--help" || "$1" = "--usage" ]]; then
 	usage
 fi
 

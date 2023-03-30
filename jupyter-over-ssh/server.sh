@@ -11,5 +11,5 @@ if [ ! -z "$2" ]; then
 fi
 
 cmd="jupyter lab --no-browser --port=$labport"
-tmux new -d -s jlab
-tmux send-keys -t jlab.0 "$cmd" ENTER
+tmux new -d -s jlab$labport
+tmux send-keys -t jlab$labport.0 "$cmd" ENTER

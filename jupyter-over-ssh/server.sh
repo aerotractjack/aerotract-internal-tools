@@ -2,12 +2,12 @@
 if [[ "$1" == "-s" || "$1" == "--setup" ]]; then
 	python3 -m pip install jupyterlab
 	sudo apt install tmux
-    exit 0
+    	exit 0
 fi
 
 labport="5055"
-if [ ! -z "$2" ]; then
-    labport=$2
+if [ ! -z "$1" ]; then
+    labport=$1
 fi
 
 cmd="jupyter lab --no-browser --port=$labport"

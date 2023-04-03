@@ -3,11 +3,11 @@ Connecting a computer running a linux OS to a network shared folder so that it w
 Created March 22, 2023 by Jack Wolf
 
 # USAGE
-`$ sudo -u $USER ./nas2fstab.sh`
+`$ sudo ./nas2fstab.sh $USER`
 
 ## Script notes
-- Must be ran with sudo privileges as your user so it can write to /etc/fstab, with the following command
-`$ sudo -u $USER ./nas2fstab.sh`
+- Must be ran with sudo privileges so it can write to /etc/fstab, with the following command
+`$ sudo -u ./nas2fstab.sh $USER`
 - Script only needs to be ran once
 - Must reboot machine after script runs
 - Can be used to mount multiple NAS instances

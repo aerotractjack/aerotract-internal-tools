@@ -22,7 +22,7 @@ fi
 
 apt install cifs-utils
 
-loginu=$USER
+loginu=$1
 
 echo -e "\n1. Enter network attached storage IP addres [ex. 192.168.X.ABC]: "
 read ip

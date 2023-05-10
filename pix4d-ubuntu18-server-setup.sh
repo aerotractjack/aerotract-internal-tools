@@ -23,7 +23,7 @@ pushd /home/aerotract
 mkdir software
 pushd software
 gh repo clone aerotractjack/aerotract-internal-tools internal-tools
-pushd internal-tools/mount-nas-linux
+pushd internal-tools/mount-NAS-linux
 sudo ./nas2fstab.sh $USER
 popd
 gh repo clone aerotractjack/orthoq

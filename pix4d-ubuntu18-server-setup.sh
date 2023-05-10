@@ -1,5 +1,11 @@
 #!/bin/bash
 
+if [[ "$1" == "" ]]; then
+	echo "You forgot to specify the SSH port"
+	echo -e "USAGE:\n\t ./pix4d-ubuntu-server-setup.sh SSHPORT"
+	exit 1
+fi
+
 sudo apt-get update
 sudo apt-get install openssh-server \
     python3-pip \

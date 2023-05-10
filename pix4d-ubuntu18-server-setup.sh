@@ -43,6 +43,8 @@ pushd /home/$USER/NAS/main/Pix4D-SDK-install
 sudo apt-get install ./python3-pix4dengine_1.4.3_amd64.deb
 popd
 
+sudo chmod a+w /etc/ssh/sshd_config
 sudo echo "Port {$1}" >> /etc/ssh/sshd_config
+sudo chmod a-w /etc/ssh/sshd_config
 sudo systemctl restart ssh
 sudo systemctl status ssh

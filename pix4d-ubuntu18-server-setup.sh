@@ -11,7 +11,11 @@ sudo apt-get install openssh-server \
     python3-pip \
     vim \
     net-tools \
-    git 
+    git \
+    tmux \
+    htop \
+
+python3 -m pip install flask
 
 type -p curl >/dev/null || (sudo apt update && sudo apt install curl -y)
 curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
@@ -41,7 +45,11 @@ popd
 
 pushd /home/$USER/NAS/main/Pix4D-SDK-install
 sudo apt-get install ./python3-pix4dengine_1.4.3_amd64.deb
+sudo apt install ./code_1.77.0-1680085573_amd64.deb
+sudo cp certs/* /etc/ssl/certs
 popd
+
+code ext install ms-vscode-remote.vscode-remote-extensionpack
 
 sudo chmod a+w /etc/ssh/sshd_config
 sudo echo "Port $1" >> /etc/ssh/sshd_config

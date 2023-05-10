@@ -48,3 +48,7 @@ sudo echo "Port {$1}" >> /etc/ssh/sshd_config
 sudo chmod a-w /etc/ssh/sshd_config
 sudo systemctl restart ssh
 sudo systemctl status ssh
+
+echo "alias cl=\"clear\"" >> ~/.bashrc
+echo "alias p3=\"python3\"" >> ~/.bashrc
+source ~/.bashrc

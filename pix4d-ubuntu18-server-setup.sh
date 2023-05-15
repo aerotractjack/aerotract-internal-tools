@@ -35,7 +35,7 @@ gh auth login
 
 # clone repos for running/managing orthomosaic export software
 pushd /home/$USER
-mkdir software
+mkdir -p software
 pushd software
 for f in aerotract-internal-tools ortho_maker; do
     gh repo clone aerotractjack/$REPO

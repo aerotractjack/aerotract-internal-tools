@@ -60,8 +60,7 @@ popd
 code ext install ms-vscode-remote.vscode-remote-extensionpack
 
 # edit the sshd_config file to host on our ssh port
-sudo chmod root:root /etc/ssh/sshd_config
-sudo chmod 644 /etc
+sudo chmod a+w /etc/ssh/sshd_config
 sudo echo "Port $1" >> /etc/ssh/sshd_config
 sudo systemctl restart ssh
 sudo systemctl status ssh

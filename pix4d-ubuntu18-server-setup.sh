@@ -37,7 +37,7 @@ gh auth login
 pushd /home/$USER
 mkdir -p software
 pushd software
-for f in aerotract-internal-tools ortho_maker; do
+for REPO in aerotract-internal-tools ortho_maker; do
     gh repo clone aerotractjack/$REPO
 done
 popd

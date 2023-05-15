@@ -39,6 +39,7 @@ mkdir software
 pushd software
 for f in aerotract-internal-tools ortho_maker; do
     gh repo clone aerotractjack/$REPO
+done
 popd
 popd
 

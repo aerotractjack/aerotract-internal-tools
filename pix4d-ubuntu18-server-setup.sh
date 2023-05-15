@@ -47,7 +47,7 @@ popd
 pushd /home/$USER/software
 mv aerotract-internal-tools internal-tools
 pushd internal-tools
-sudo ./nas2fstab $USER
+sudo ./nas2fstab.sh $USER
 popd
 popd
 

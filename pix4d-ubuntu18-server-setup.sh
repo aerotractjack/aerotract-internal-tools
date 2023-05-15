@@ -65,6 +65,9 @@ sudo echo "Port $1" >> /etc/ssh/sshd_config
 sudo systemctl restart ssh
 sudo systemctl status ssh
 
+# ssh key setup for git hooks
+ssh-keygen -t rsa -b 4096 -C "jackw@aerotractone.com"
+
 # set some system aliases and variables
 echo "alias cl=\"clear\"" >> ~/.bashrc
 echo "alias p3=\"python3\"" >> ~/.bashrc

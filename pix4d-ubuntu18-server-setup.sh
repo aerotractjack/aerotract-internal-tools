@@ -63,7 +63,6 @@ code ext install ms-vscode-remote.vscode-remote-extensionpack
 sudo chmod a+w /etc/ssh/sshd_config
 sudo echo "Port $1" >> /etc/ssh/sshd_config
 sudo systemctl restart ssh
-sudo systemctl status ssh
 
 # ssh key setup for git hooks
 ssh-keygen -t rsa -b 4096 -C "jackw@aerotractone.com"

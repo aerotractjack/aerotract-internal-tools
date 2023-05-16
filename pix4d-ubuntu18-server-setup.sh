@@ -46,7 +46,7 @@ popd
 # mount the NAS
 pushd /home/$USER/software
 mv aerotract-internal-tools internal-tools
-pushd internal-tools
+pushd internal-tools/mount-NAS-linux
 sudo ./nas2fstab.sh $USER
 popd
 popd

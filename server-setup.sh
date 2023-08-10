@@ -37,7 +37,7 @@ gh auth login
 pushd /home/$USER
 mkdir -p software
 pushd software
-for REPO in aerotract-internal-tools ortho_maker; do
+for REPO in aerotract-internal-tools ZiggyPipeline; do
     gh repo clone aerotractjack/$REPO
 done
 popd
@@ -53,9 +53,7 @@ popd
 
 # install the pix4d sdk and vscode for remote editing
 pushd /home/$USER/NAS/main/pix4d_server/sdk_install
-sudo apt-get install ./python3-pix4dengine_1.4.3_amd64.deb
 sudo apt install ./code_1.77.0-1680085573_amd64.deb
-sudo cp certs/* /etc/ssl/certs
 popd
 code ext install ms-vscode-remote.vscode-remote-extensionpack
 
@@ -70,5 +68,4 @@ ssh-keygen -t rsa -b 4096 -C "jackw@aerotractone.com"
 # set some system aliases and variables
 echo "alias cl=\"clear\"" >> ~/.bashrc
 echo "alias p3=\"python3\"" >> ~/.bashrc
-echo "export ORTHOQ_FINISHED_DIR=\"/home/$USER/NAS/main/ORTHOQ_FINISHED\"" >> ~/.bashrc
 source ~/.bashrc

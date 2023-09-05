@@ -1,0 +1,12 @@
+[Unit] 
+Description=Start data management services on Sandra
+After=network.target
+
+[Service]
+User=aerotract
+WorkingDirectory=/home/aerotract/software/internal-tools/startup_scripts
+ExecStart=/home/aerotract/software/internal-tools/startup_scripts/sandra.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

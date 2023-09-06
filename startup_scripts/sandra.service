@@ -4,7 +4,6 @@ After=network.target
 
 [Service]
 User=aerotract
-WorkingDirectory=/home/aerotract/software/internal-tools/startup_scripts
 ExecStart=/home/aerotract/software/internal-tools/startup_scripts/sandra.sh
 Restart=always
 

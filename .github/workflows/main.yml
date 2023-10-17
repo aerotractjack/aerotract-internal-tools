@@ -1,4 +1,4 @@
-name: Deploy LabelService to Jack WS, WS003, WS004 from WS006
+name: Deploy internal-tools to Jack WS, WS003, WS004 from WS006
 on:
   push:
     branches:

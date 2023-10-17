@@ -5,7 +5,8 @@ After=network.target
 [Service]
 User=aerotract
 ExecStart=/home/aerotract/software/internal-tools/startup_scripts/sandra.sh
-Restart=always
+Type=oneshot
+Environment="TERM=xterm" "TMUX=/tmp/tmux-1000/default"
 
 [Install]
 WantedBy=multi-user.target

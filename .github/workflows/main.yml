@@ -1,0 +1,40 @@
+name: Deploy LabelService to Jack WS, WS003, WS004 from WS006
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH keys
+        run: |
+          mkdir ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${{ secrets.WS006_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.WS006_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa.pub
+          ssh-keyscan -p 1010 -H 67.210.192.18 >> ~/.ssh/known_hosts
+          ssh-keyscan -p 2593 -H 67.210.192.18 >> ~/.ssh/known_hosts
+          ssh-keyscan -p 5902 -H 67.210.192.18 >> ~/.ssh/known_hosts
+
+      - name: Deploy to Jack WS
+        run: |
+          ssh -o PasswordAuthentication=no -p 2593 aerotract@67.210.192.18 "mkdir -p /home/aerotract/software/internal-tools"
+          scp -o PasswordAuthentication=no -P 2593 -r ./* aerotract@67.210.192.18:/home/aerotract/software/internal-tools
+
+      - name: Deploy to WS003
+        run: |
+          ssh -o PasswordAuthentication=no -p 1010 aerotract@67.210.192.18 "mkdir -p /home/aerotract/software/internal-tools"
+          scp -o PasswordAuthentication=no -P 1010 -r ./* aerotract@67.210.192.18:/home/aerotract/software/internal-tools
+
+      - name: Deploy to WS004
+        run: |
+          ssh -o PasswordAuthentication=no -p 5902 aerotract@67.210.192.18 "mkdir -p /home/aerotract/software/internal-tools"
+          scp -o PasswordAuthentication=no -P 5902 -r ./* aerotract@67.210.192.18:/home/aerotract/software/internal-tools

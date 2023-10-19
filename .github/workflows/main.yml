@@ -22,12 +22,21 @@ jobs:
           chmod 600 ~/.ssh/id_rsa.pub
           ssh-keyscan -p 1010 -H 67.210.192.18 >> ~/.ssh/known_hosts
           ssh-keyscan -p 2593 -H 67.210.192.18 >> ~/.ssh/known_hosts
+          ssh-keyscan -p 2599 -H 67.210.192.18 >> ~/.ssh/known_hosts
+          ssh-keyscan -p 1953 -H 67.210.192.18 >> ~/.ssh/known_hosts
           ssh-keyscan -p 5902 -H 67.210.192.18 >> ~/.ssh/known_hosts
 
       - name: Deploy to Jack WS
         run: |
-          ssh -o PasswordAuthentication=no -p 2593 aerotract@67.210.192.18 "mkdir -p /home/aerotract/software/internal-tools"
-          scp -o PasswordAuthentication=no -P 2593 -r ./* aerotract@67.210.192.18:/home/aerotract/software/internal-tools
+          ssh -o PasswordAuthentication=no -p 2593 aerotract@67.210.192.18 "cd /home/aerotract/software/internal-tools; git pull"
+
+      - name: Deploy to Seth WS
+        run: |
+          ssh -o PasswordAuthentication=no -p 2599 aerotract@67.210.192.18 "cd /home/aerotract/software/internal-tools; git pull"
+  
+      - name: Deploy to Sandra
+        run: |
+          ssh -o PasswordAuthentication=no -p 1953 aerotract@67.210.192.18 "cd /home/aerotract/software/internal-tools; git pull"
 
       - name: Deploy to WS003
         run: |
